@@ -1,0 +1,39 @@
+import glob
+import os
+
+from lxml import etree
+
+
+def xml_helper(loc, ct, tag_selected, xml_file_path):
+    context = etree.iterparse(xml_file_path, events=('end',), recover=True)
+    prod_name = os.path.splitext(os.path.basename(xml_file_path))[0]
+    directory = f'{loc}/{ct}/xml/cx_{ct}/{prod_name}'
+    os.makedirs(directory, exist_ok=True)
+    my_dict = tag_selected.copy()
+    for event, elem in context:
+        tn = etree.QName(elem).localname
+        if tn in my_dict.keys():
+            fn = f'{directory}/{prod_name}_{tn}_{my_dict[tn]}.xml'
+            my_dict[tn] += 1
+            print(fn)
+            with open(fn, 'wb') as f:
+                f.write(bytearray('<?xml version="1.0" encoding="utf-8" ?>\n', 'utf-8'))
+                f.write(etree.tostring(elem))
+
+
+def xml_split_all_dir(loc, ct, tag_selected):
+    for xml_file_path in glob.glob(f'{loc}/{ct}/xml/ox_{ct}/*/*.xml'):
+        xml_helper(loc, ct, tag_selected, xml_file_path)
+
+
+def xml_split(loc, ct, tag_selected, folder):
+    for x in folder:
+        for xml_file_path in glob.glob(f'{loc}/{ct}/xml/ox_{ct}/{x}/*.xml'):
+            xml_helper(loc, ct, tag_selected, xml_file_path)
+
+
+def process_xml_chunk(loc, ct, tag_selected, all_dir, folder):
+    if all_dir:
+        return xml_split_all_dir(loc, ct, tag_selected)
+    else:
+        return xml_split(loc, ct, tag_selected, folder)
