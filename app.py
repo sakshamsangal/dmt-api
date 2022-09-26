@@ -10,7 +10,7 @@ from dao import update as ud
 from service import fill_comp_style as fcs
 from service import fill_feat as ff
 from service import fill_phase as fp
-from service import map_from_data_dic
+from service import map_from_data_dic_ser
 from service import map_xpath as mx1
 from service import xml_split as chunk
 from service import xml_split_with_root as chunk_root
@@ -117,7 +117,7 @@ def map_from_data_dic():
     if request.method == "POST":
         loc = request.json['loc']
         ct = request.json['ct']
-        map_from_data_dic.process_data_dic(loc, ct)
+        map_from_data_dic_ser.process_data_dic(loc, ct)
         return jsonify({'status': 'tag_master mapped acc. to data dic'})
 
 
