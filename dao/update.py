@@ -1,4 +1,3 @@
-from dao import read as rd
 from dao.exec import *
 
 
@@ -7,11 +6,13 @@ def update(loc, tb_name, ls):
     executemany_statement(loc, sql, ls)
 
 
-def update_data_dic(loc, ct, has_text, cond):
-    ls = rd.get_has_text(loc, ct, has_text)
-    text_str = (','.join(map(lambda x: str(x[0]), ls)))
-    sql = f'UPDATE tb_data_dic set {ct}="{text_str}" where feat="{cond}"'
-    execute_statement(loc, sql)
+def update_data_dic(loc, ct, ls):
+    sql = f'UPDATE tb_data_dic set {ct}=? where feat=?'
+    executemany_statement(loc, sql, ls)
+    # ls = rd.get_has_text(loc, ct, has_text)
+    # text_str = (','.join(map(lambda x: str(x[0]), ls)))
+    # sql = f'UPDATE tb_data_dic set {ct}="{text_str}" where feat="{cond}"'
+    # execute_statement(loc, sql)
 
 
 def update_processed(loc, ls, col_name, flag):

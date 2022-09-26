@@ -31,8 +31,6 @@ def xml_traverse_pc(root):
     for k, v in counter.items():
         res += f'_{k}({str(v)})'
 
-    print(res)
-
     pc_dic[res] = (res, tag_name, file_name, prod_name, ct)
 
 

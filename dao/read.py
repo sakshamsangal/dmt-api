@@ -24,7 +24,7 @@ def get_selected_file_name(loc):
 
 
 def get_tag_map(loc):
-    sql = f'''SELECT tag,map_tag from tb_master_tag order by tag desc'''
+    sql = f'''SELECT tag,map_tag from tb_master_tag'''
     return execute_statement_return_lot(loc, sql)
 
 
@@ -65,5 +65,5 @@ def get_patt_to_be_replaced_fixed(loc):
 
 
 def read_data_dic(loc, ct):
-    sql = f'''SELECT feat, {ct}, priority from tb_data_dic order by priority'''
+    sql = f'''SELECT feat, {ct} from tb_data_dic'''
     return execute_statement_return_lot(loc, sql)

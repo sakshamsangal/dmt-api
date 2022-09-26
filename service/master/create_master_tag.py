@@ -23,7 +23,7 @@ has_text_tag = set()
 def xml_traverse(parent, root):
     tag_name = etree.QName(root).localname
     if tag_name not in tag_dic:
-        tag_dic[tag_name] = (tag_name, 'yes', file_name, prod_name, ct, file_size, 'no')
+        tag_dic[tag_name] = (tag_name,'skip', 'yes', file_name, prod_name, ct, file_size, 'no')
         tag_ct.append((ct + '_' + tag_name, tag_name, ct))
 
     parent_dic[tag_name] = parent
@@ -63,7 +63,7 @@ def process_master_tag(loc, content_type, all_dir, products):
 
     cr.create_tb_master_tag(loc, 'tb_temp_tag_map')
     # res = df.to_records(index=False).tolist()
-    ins.insert(loc, 'tb_temp_tag_map', 7, tag_dic.values())
+    ins.insert(loc, 'tb_temp_tag_map', 8, tag_dic.values())
     rd.merge(loc, 'tb_master_tag', 'tb_temp_tag_map', 'tag')
     dt.drop_tb(loc, 'tb_temp_tag_map')
 
@@ -71,5 +71,6 @@ def process_master_tag(loc, content_type, all_dir, products):
     ins.insert_ignore_processed(loc, ls)
     up.update_processed(loc, ls, 'master_tag', 1)
 
+    up.update_tag_master_data_dic(loc, ls)
     add_tag_ct(loc)
     tag_dic = {}

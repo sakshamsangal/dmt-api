@@ -10,8 +10,9 @@ from dao import update as ud
 from service import fill_comp_style as fcs
 from service import fill_feat as ff
 from service import fill_phase as fp
-from service import map_from_data_dic_ser
+from service import map_tag as mt1
 from service import map_xpath as mx1
+from service import my_convert as mc1
 from service import xml_split as chunk
 from service import xml_split_with_root as chunk_root
 from service.master import create_master_att as cma
@@ -27,7 +28,8 @@ def handle_exception(e):
     response.data = json.dumps({
         "code": e.code,
         "name": e.name,
-        "description": e.description,
+        "msg": str(e)
+        # "description": e.description,
     })
     response.content_type = "application/json"
     return response
@@ -91,14 +93,22 @@ def data_dic_add_col():
         return jsonify({'status': x})
 
 
-@app.route("/add-text-wrapper", methods=["POST"])
-def add_text_wrapper():
+@app.route("/convert-dd-to-tm", methods=["POST"])
+def convert_dd_to_tm():
     if request.method == "POST":
         loc = request.json['loc']
         ct = request.json['ct']
-        ud.update_data_dic(loc, ct, 'yes', 'text')
-        ud.update_data_dic(loc, ct, 'no', 'wrapper')
-        return jsonify({'status': 'text tag mapped to data dic'})
+        res = mc1.convert_dd_to_tm(loc, ct)
+        return {'success': res}
+
+
+@app.route("/convert-tm-to-dd", methods=["POST"])
+def convert_tm_to_dd():
+    if request.method == "POST":
+        loc = request.json['loc']
+        ct = request.json['ct']
+        res = mc1.convert_tm_to_dd(loc, ct)
+        return {'success': res}
 
 
 @app.route("/map-xpath", methods=["POST"])
@@ -112,13 +122,13 @@ def map_xpath():
         return {'success': res}
 
 
-@app.route("/map-from-data-dic", methods=["POST"])
-def map_from_data_dic():
+@app.route("/map-tag", methods=["POST"])
+def map_tag():
     if request.method == "POST":
         loc = request.json['loc']
         ct = request.json['ct']
-        map_from_data_dic_ser.process_data_dic(loc, ct)
-        return jsonify({'status': 'tag_master mapped acc. to data dic'})
+        res = mt1.map_tag(loc, ct)
+        return {'success': res}
 
 
 @app.route("/fill-feat", methods=["POST"])
