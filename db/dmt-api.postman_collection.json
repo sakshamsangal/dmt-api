@@ -131,38 +131,7 @@
 			"response": []
 		},
 		{
-			"name": "master-tag",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"ct\": \"{{ct}}\",\r\n    \"loc\": \"{{loc}}\",\r\n    \"all-dir\": true,\r\n    \"prod\": [\"990\"]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://127.0.0.1:5000/master-tag",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "5000",
-					"path": [
-						"master-tag"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "add-text-wrapper",
+			"name": "convert-dd-to-tm",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -176,7 +145,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/add-text-wrapper",
+					"raw": "http://127.0.0.1:5000/convert-dd-to-tm",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -186,7 +155,38 @@
 					],
 					"port": "5000",
 					"path": [
-						"add-text-wrapper"
+						"convert-dd-to-tm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "convert-tm-to-dd",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ct\": \"{{ct}}\",\r\n    \"loc\": \"{{loc}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/convert-tm-to-dd",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"convert-tm-to-dd"
 					]
 				}
 			},
@@ -224,7 +224,7 @@
 			"response": []
 		},
 		{
-			"name": "map-from-data-dic",
+			"name": "map-tag",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -238,7 +238,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/map-from-data-dic",
+					"raw": "http://127.0.0.1:5000/map-tag",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -248,7 +248,7 @@
 					],
 					"port": "5000",
 					"path": [
-						"map-from-data-dic"
+						"map-tag"
 					]
 				}
 			},
@@ -342,6 +342,37 @@
 					"port": "5000",
 					"path": [
 						"fill-phase"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "master-tag",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ct\": \"{{ct}}\",\r\n    \"loc\": \"{{loc}}\",\r\n    \"all-dir\": true,\r\n    \"prod\": [\"990\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/master-tag",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"master-tag"
 					]
 				}
 			},
