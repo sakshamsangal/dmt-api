@@ -26,10 +26,15 @@ def update_processed_remove(loc, ls, col_name, flag):
 
 
 def update_tag_master_data_dic(loc, ls):
-    sql = f'UPDATE tb_master_tag set map_tag=? where tag=?'
+    sql = f'UPDATE tb_tag_ct set map_tag=? where tag=? and ct=?'
     executemany_statement(loc, sql, ls)
 
 
 def update_has_text_tag(loc, ls):
-    sql = f'UPDATE tb_master_tag set has_text="yes" where tag=?'
+    sql = f'UPDATE tb_tag_ct set map_tag="text" where tag=? and ct=?'
+    executemany_statement(loc, sql, ls)
+
+
+def update_has_text_tag_tag_master(loc, ls):
+    sql = f'UPDATE tb_master_tag set has_text="yes" where tag=? and ct=?'
     executemany_statement(loc, sql, ls)

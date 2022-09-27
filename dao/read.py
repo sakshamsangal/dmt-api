@@ -23,8 +23,8 @@ def get_selected_file_name(loc):
     return execute_statement_return(loc, sql)
 
 
-def get_tag_map(loc):
-    sql = f'''SELECT tag,map_tag from tb_master_tag'''
+def get_tag_map(loc, ct):
+    sql = f'''SELECT tag,map_tag from tb_tag_ct where ct="{ct}"'''
     return execute_statement_return_lot(loc, sql)
 
 

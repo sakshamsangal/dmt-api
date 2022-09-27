@@ -23,6 +23,7 @@ def create_tb_tag_ct(loc, tb_name):
     sql = f"""CREATE TABLE IF NOT EXISTS {tb_name} (
         id text NOT NULL PRIMARY KEY,
         tag text,
+        map_tag text,
         ct text
     )"""
     execute_statement(loc, sql)
@@ -68,7 +69,6 @@ def create_tb_exception(loc, tb_name):
 def create_tb_master_tag(loc, tb_name):
     sql = f"""CREATE TABLE IF NOT EXISTS {tb_name} (
         tag text NOT NULL PRIMARY KEY,
-        map_tag text,
         rendered text,
         file_name text,
         prod_name text,

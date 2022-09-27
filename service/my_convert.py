@@ -12,13 +12,13 @@ def convert_dd_to_tm(loc, ct):
             s = re.sub(",|\n|\r|\t", " ", tu[1])
             temp_ls = s.split()
             for item in temp_ls:
-                my_ls.append((tu[0], item))
+                my_ls.append((tu[0], item, ct))
     up.update_tag_master_data_dic(loc, my_ls)
     return True
 
 
 def convert_tm_to_dd(loc, ct):
-    ls = rd.get_tag_map(loc)
+    ls = rd.get_tag_map(loc, ct)
     dd = {}
     for tu in ls:
         if tu[1] in dd:
