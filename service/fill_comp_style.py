@@ -14,7 +14,7 @@ def remove_processed_record(df, df_new):
 
 
 def remove_processed_record1(df, df_new):
-    rows = df.loc[df['comp'] == df['Component'], :]
+    rows = df.loc[df['comp'] != df['Component'], :]
     df_new = pd.concat([df_new, pd.DataFrame.from_records(rows)])
     df.drop(rows.index, inplace=True)
     df.reset_index(drop=True, inplace=True)
@@ -77,7 +77,8 @@ def fill_comp_style(loc, ct, fn):
     c = df.shape[0]
 
     df_new1 = pd.DataFrame(columns=df.columns)
-    df, df_new = remove_processed_record(df_new, df_new1)
+    df, df_new = remove_processed_record1(df_new, df_new1)
+    df_new.drop(df_new.columns[0:6], axis=1, inplace=True)
     df_new.to_excel(f'{loc}/{ct}/excel/{fn}.xlsx', index=False)
 
     return c
