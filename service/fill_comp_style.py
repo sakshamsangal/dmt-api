@@ -66,7 +66,7 @@ def fill_exception(loc, ct, df, df_new):
     return df, df_new
 
 
-def fill_comp_style(loc, ct):
+def fill_comp_style(loc, ct, fn):
     df = pd.read_excel(f'{loc}/{ct}/excel/dm_sheet/{ct}_feat.xlsx', sheet_name='Sheet1')
     df_new = pd.DataFrame(columns=df.columns)
     df, df_new = fill_exception(loc, ct, df, df_new)
@@ -78,7 +78,7 @@ def fill_comp_style(loc, ct):
 
     df_new1 = pd.DataFrame(columns=df.columns)
     df, df_new = remove_processed_record(df_new, df_new1)
-    df_new.to_excel(f'{loc}/{ct}/excel/dm_sheet/{ct}_dm_false.xlsx', index=False)
+    df_new.to_excel(f'{loc}/{ct}/excel/{fn}.xlsx', index=False)
 
     return c
 
