@@ -61,7 +61,7 @@ def create_tb_exception(loc, tb_name):
         overwrite_feat int,
         ct text,
         priority int,
-        pat_col text default 'Legacy Xpaths'
+        pat_col text default 'm_xpath'
     )"""
     execute_statement(loc, sql)
 
