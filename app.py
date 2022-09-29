@@ -31,7 +31,7 @@ def export_tb_map_tag():
             ex.export_tb_map_tag(loc, ct, tb_name)
             return jsonify({'status': f'{tb_name} exported as excel', 'loc': f'{loc}/excel'})
     except Exception as e:
-        return str(e)
+        return jsonify({'status': str(e)})
 
 
 @app.route('/dir-maker', methods=["POST"])
@@ -48,7 +48,7 @@ def dir_maker():
                 os.makedirs(f'{loc}/{x}/xml/zx_{x}', exist_ok=True)
             return {'folder_name': ls, 'loc': loc, 'status': 'created'}
     except Exception as e:
-        return str(e)
+        return jsonify({'status': str(e)})
 
 
 @app.route('/xml-chunk', methods=["POST"])
@@ -61,9 +61,9 @@ def xml_chunk():
             prod_names = request.json['prod_names']
             all_dir = request.json['all-dir']
             chunk.process_xml_chunk(loc, ct, tag_selected, all_dir, prod_names)
-            return {'ct': ct, 'loc': loc, 'status': 'success', 'tag_selected': tag_selected}
+            return {'ct': ct, 'loc': loc, 'status': True, 'tag_selected': tag_selected}
     except Exception as e:
-        return str(e)
+        return jsonify({'status': str(e)})
 
 
 @app.route('/xml-chunk-root', methods=["POST"])
@@ -76,9 +76,9 @@ def xml_chunk_root():
             prod_names = request.json['prod_names']
             all_dir = request.json['all-dir']
             chunk_root.process_xml_chunk_root(loc, ct, ls_tag, all_dir, prod_names)
-            return {'ct': ct, 'loc': loc, 'status': 'success', 'tag_selected': ls_tag}
+            return {'ct': ct, 'loc': loc, 'status': True, 'tag_selected': ls_tag}
     except Exception as e:
-        return str(e)
+        return jsonify({'status': str(e)})
 
 
 @app.route("/data-dic-add-col", methods=["POST"])
@@ -91,7 +91,7 @@ def data_dic_add_col():
             x = cr.add_column(loc, ct, 'tb_data_dic')
             return jsonify({'status': x})
     except Exception as e:
-        return str(e)
+        return jsonify({'status': str(e)})
 
 
 @app.route("/convert-dd-to-tm", methods=["POST"])
@@ -101,9 +101,9 @@ def convert_dd_to_tm():
             loc = request.json['loc']
             ct = request.json['ct']
             res = mc1.convert_dd_to_tm(loc, ct)
-            return {'success': res}
+            return {'status': res}
     except Exception as e:
-        return str(e)
+        return jsonify({'status': str(e)})
 
 
 @app.route("/convert-tm-to-dd", methods=["POST"])
@@ -113,10 +113,10 @@ def convert_tm_to_dd():
             loc = request.json['loc']
             ct = request.json['ct']
             res = mc1.convert_tm_to_dd(loc, ct)
-            return {'success': res}
+            return {'status': res}
 
     except Exception as e:
-        return str(e)
+        return jsonify({'status': str(e)})
 
 
 @app.route("/map-xpath", methods=["POST"])
@@ -128,9 +128,9 @@ def map_xpath():
             file_name = request.json['file_name']
             sn = request.json['sn']
             res = mx1.map_xpath_to_tag(loc, ct, file_name, sn)
-            return {'success': res}
+            return {'status': res}
     except Exception as e:
-        return str(e)
+        return jsonify({'status': str(e)})
 
 
 @app.route("/map-tag", methods=["POST"])
@@ -140,9 +140,9 @@ def map_tag():
             loc = request.json['loc']
             ct = request.json['ct']
             res = mt1.map_tag(loc, ct)
-            return {'success': res}
+            return {'status': res}
     except Exception as e:
-        return str(e)
+        return jsonify({'status': str(e)})
 
 
 @app.route("/fill-feat", methods=["POST"])
@@ -154,7 +154,7 @@ def fill_feat():
             ls = ff.fill_feature(loc, ct)
             return {'pat': ls}
     except Exception as e:
-        return str(e)
+        return jsonify({'status': str(e)})
 
 
 @app.route("/fill-comp-style", methods=["POST"])
@@ -164,10 +164,10 @@ def fill_comp_style():
             loc = request.json['loc']
             ct = request.json['ct']
             fn = request.json['fn']
-            ls = fcs.fill_comp_style(loc, ct, fn)
-            return {'xpath_left': ls}
+            ls, fc = fcs.fill_comp_style(loc, ct, fn)
+            return {'xpath_left': ls, 'false_count':fc}
     except Exception as e:
-        return str(e)
+        return jsonify({'status': str(e)})
 
 
 @app.route("/fill-phase", methods=["POST"])
@@ -180,7 +180,7 @@ def fill_phase():
             ls = fp.fill_phase(loc, ct, alpha_no)
             return {'xpath_left': ls}
     except Exception as e:
-        return str(e)
+        return jsonify({'status': str(e)})
 
 
 @app.route("/master-tag", methods=["POST"])
@@ -194,7 +194,7 @@ def master_tag():
             cmt.process_master_tag(loc, ct, all_dir, prod)
             return jsonify({'status': 'db updated'})
     except Exception as e:
-        return str(e)
+        return jsonify({'status': str(e)})
 
 
 @app.route("/master-att", methods=["POST"])
@@ -208,7 +208,7 @@ def master_att():
             cma.process_master_att(loc, ct, all_dir, prod)
             return jsonify({'status': 'db updated'})
     except Exception as e:
-        return str(e)
+        return jsonify({'status': str(e)})
 
 
 @app.route("/master-pc", methods=["POST"])
@@ -222,7 +222,7 @@ def master_pc():
             cmp.process_master_pc(loc, ct, all_dir, prod)
             return jsonify({'status': 'db updated'})
     except Exception as e:
-        return str(e)
+        return jsonify({'status': str(e)})
 
 
 @app.route("/delete-prod", methods=["POST"])
@@ -237,7 +237,7 @@ def delete_prod():
             msg = dt.delete_prod(loc, temp)
             return {'status': msg}
     except Exception as e:
-        return str(e)
+        return jsonify({'status': str(e)})
 
 
 @app.route("/delete-ct", methods=["POST"])
@@ -252,9 +252,9 @@ def delete_ct():
                 temp.append((x,))
             dt.delete_ct(loc, temp, mt)
             ud.update_processed_remove(loc, ls, mt, 0)
-            return {'success': True}
+            return {'status': True}
     except Exception as e:
-        return str(e)
+        return jsonify({'status': str(e)})
 
 
 if __name__ == '__main__':
