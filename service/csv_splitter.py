@@ -1,4 +1,5 @@
-chunk_size = 10000
+chunk_size = 100
+count_break = 3
 
 
 def write_chunk(part, lines):
@@ -15,7 +16,11 @@ with open("temp.csv", "r") as f:
         count += 1
         lines.append(line)
         if count % chunk_size == 0:
-            write_chunk(count // chunk_size, lines)
+            x = count // chunk_size
+            if count_break == x:
+                break
+            else:
+                write_chunk(x, lines)
             lines = []
     # write remainder
     if len(lines) > 0:
