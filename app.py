@@ -157,6 +157,7 @@ def fill_phase():
         ct = request.json['ct']
         alpha_no = request.json['alpha_no']
         ls = fp.fill_phase(loc, ct, alpha_no)
+        
         return {'xpath_left': ls}
 
 
