@@ -14,7 +14,7 @@ def map_xpath_to_tag(loc, ct, file_name, sn):
     df['m_xpath'] = df['Legacy Xpaths']
     ls = rd.get_patt_to_be_replaced(loc, ct)
     for tu in ls:
-        df['m_xpath'].replace(to_replace=tu[0], value=tu[1], regex=True, inplace=True)
+        df['m_xpath'].replace(to_replace=fr'{tu[0]}\\b', value=tu[1], regex=True, inplace=True)
     df.to_excel(f'{loc}/{ct}/excel/dm_sheet/{ct}_xpath.xlsx', index=False)
     return True
 

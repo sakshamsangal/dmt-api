@@ -13,6 +13,14 @@ def remove_processed_record(df, df_new):
     return df, df_new
 
 
+def remove_processed_record1(df, df_new):
+    rows = df.loc[df['comp'] == df['Component'], :]
+    df_new = pd.concat([df_new, pd.DataFrame.from_records(rows)])
+    df.drop(rows.index, inplace=True)
+    df.reset_index(drop=True, inplace=True)
+    return df, df_new
+
+
 def update_df(df, short_str, comp, style, feat):
     for index, row in df.iterrows():
         if row['m_xpath'].endswith(short_str):
@@ -63,6 +71,11 @@ def fill_comp_style(loc, ct):
     df_new = pd.DataFrame(columns=df.columns)
     df, df_new = fill_exception(loc, ct, df, df_new)
     df, df_new = my_ends_with(loc, df, df_new)
+
+    df_new1 = pd.DataFrame(columns=df.columns)
+    df, df_new = remove_processed_record(df_new, df_new1)
+
     df_new.to_excel(f'{loc}/{ct}/excel/dm_sheet/{ct}_dm.xlsx', index=False)
     df.to_excel(f'{loc}/{ct}/excel/dm_sheet/{ct}_feat.xlsx', index=False)
-    return df.shape[0]
+    c = df.shape[0]
+    return c
