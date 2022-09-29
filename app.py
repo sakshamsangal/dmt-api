@@ -145,7 +145,8 @@ def fill_comp_style():
     if request.method == "POST":
         loc = request.json['loc']
         ct = request.json['ct']
-        ls = fcs.fill_comp_style(loc, ct)
+        fn = request.json['fn']
+        ls = fcs.fill_comp_style(loc, ct, fn)
         return {'xpath_left': ls}
 
 
