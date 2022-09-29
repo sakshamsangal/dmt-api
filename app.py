@@ -164,8 +164,9 @@ def fill_comp_style():
             loc = request.json['loc']
             ct = request.json['ct']
             fn = request.json['fn']
-            ls, fc = fcs.fill_comp_style(loc, ct, fn)
-            return {'xpath_left': ls, 'false_count':fc}
+            cond = request.json['cond']
+            ls, fc = fcs.fill_comp_style(loc, ct, fn, cond)
+            return {'xpath_left': ls, 'false_count': fc}
     except Exception as e:
         return jsonify({'status': str(e)})
 
